@@ -7,9 +7,54 @@ body {
   background-color: #fff;
 }
 
+.loading {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  text-align: center;
+  opacity: 0.7;
+  background-color: #fff;
+  z-index: 99;
+}
+.loading-image {
+  position: absolute;
+  top: 100px;
+  left: 440px;
+  z-index: 100;
+}
 
-
-
+ .opt {
+  cursor: pointer;
+  padding: 0px 15px;
+  border: 1px solid #565496;
+  display: flex;
+  align-items: center;
+}
+.opt .opt-let {
+  margin-right: 30px;
+  margin-left: -15px;
+  background: #9594d6;
+  color: #fff;
+  padding: 17px;
+  /*margin-top: 5px;*/
+}
+.opt.active {
+  border: 1px solid #2bb4fa;
+}
+.opt:hover {
+  border: 1px solid #2bb4fa;
+}
+.opt:hover .opt-let {
+  margin-right: 30px;
+  margin-left: -15px;
+  background: #2bb4fa;
+  padding: 17px;
+  color: #fff;
+  /*margin-top: 5px;*/
+}
 .bs-example{
   margin: 20px;
 }
@@ -73,7 +118,6 @@ body {
 }
 
 .status {
-  margin-right: -10rem;
   display: flex;
   justify-content: space-between;
 }
@@ -130,7 +174,7 @@ body {
 
 .questions {
  display: flex;
- justify-self: center;
+ align-items: center;
 }
 
 
@@ -188,6 +232,9 @@ body {
 }
 .accordion-item.active .heading {
   color: #9594d6;
+}
+.accordion-item{
+  border-bottom: 1px solid #565496;
 }
 .accordion-item.active .icon {
   background: #fefefe;
