@@ -1,5 +1,11 @@
+let next = document.querySelector('.next')
+let prev = document.querySelector('.prev')
+let tabs = document.querySelectorAll('.nav-link')
 
-let pressQ = document.getElementsByClassName("question");
+
+
+
+
 
 function removeLoader(){
     $( "#loading" ).hide();
@@ -25,27 +31,36 @@ function removeLoader(){
     const questionsId = await response.json();
     removeLoader()
   
-    let asideoCount = document.querySelector(".question");
+    let asideoCount = document.querySelector(".nav-pills");
+    let pressQ = document.querySelectorAll('.nav-link')
     for (let i = 0; i < questionsId.length; i++) {
       removeLoader()
       asideoCount.innerHTML += `
-        <a class="btn btn-primary number" data-bs-toggle="collapse" href="#Q${
-          i + 1
-        }" role="a" data-quescount="${i + 1}" data-lessonid="${
-        questionsId[i]
-      }" data-counto="${i}>
-          <p class="mb-0 mt-3"> Q ${i + 1}</p>
-        </a>
-        <div class="collapse" id="Q${
-          i + 1
-        }" data-quescount="Q" data-lessonid="Q" data-counto="Q">
-                <ul class="list-group" data-ul="${i + 1}">
-                
-                </ul>
-        </div>
-        `;
+            <li class="nav-item" role="presentation">
+            <button class="nav-link" id="Q${i+1}" data-bs-toggle="pill" data-bs-target="#Q${i+1}" type="button" role="tab"></button>
+            </li>
+            
+        `;  
     }
-    // console.log(pressQ)
+    prev.addEventListener('click', (e) => {
+      for (let i = 0; i < tabs.length; i++) {
+        if(tabs[i].classList.contains('active')) {
+          tabs[i-1].click()
+          break
+        }
+        
+      }
+    })
+    next.addEventListener('click', (e) => {
+      for (let i = 0; i < tabs.length; i++) {
+        if(tabs[i].classList.contains('active')) {
+          tabs[i+1].click()
+          break
+        }
+        
+      }
+    })
+    console.log(pressQ)
     for (let i = 0; i < pressQ.length; i++) {
       pressQ[i].addEventListener("click", function () {
         $('body').append(`<div id="loading" class="loading">
@@ -65,7 +80,7 @@ function removeLoader(){
          
   
         
-  
+        }
         
         })
       
