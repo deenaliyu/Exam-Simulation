@@ -29,11 +29,9 @@ async function getExamId() {
     removeLoader();
     asideoCount.innerHTML += `
             <li class="nav-item" role="presentation">
-            <button class="nav-link number" id="Q${
-              i + 1
-            }" data-bs-toggle="pill" data-qid="${
-      questionsId[i]
-    }" data-bs-target="#Q${i + 1}" type="button" role="tab"></button>
+            <button class="nav-link number" id="Q${i + 1
+      }" data-bs-toggle="pill" data-qid="${questionsId[i]
+      }" data-bs-target="#Q${i + 1}" type="button" role="tab"></button>
             </li> 
         `;
   }
@@ -75,16 +73,12 @@ async function getExamId() {
         }
 
         let questionsNumber = await response.json();
-        console.log(questionsNumber);
+        console.log(questionsNumber[0]['a']);
         removeLoader();
 
         // console.log(questionsNumber);
         let getNestedElement = "";
-        let zaOptions
         for (let keyQuestion in questionsNumber) {
-          if(keyQuestion == 0) {
-            zaOptions = questionsNumber[keyQuestion];
-          }
           if (keyQuestion == 1) {
             if (Object.hasOwnProperty.call(questionsNumber, keyQuestion)) {
               const element = questionsNumber[keyQuestion];
@@ -94,19 +88,19 @@ async function getExamId() {
               let theQuestion = Object.values(element);
               console.log(theOption, theQuestion);
 
-              theOption.forEach((opt, index) => {
+              for (const key in element) {
                 getNestedElement += `
-              <div class="accordion-item">
+                <div class="accordion-item">
                   <a href="#" class="heading">
                       <div class="icon"></div>
-                      <div class="title">${opt}</div>
+                      <div class="title">${key}</div>
                   </a>
           
                   <div class="content">
                     <div class="container">
                     <div class="row mb-3">
                       <div class="col-lg-8 col-9">
-                        <div class="Thequestion">${theQuestion[index]}</div>
+                        <div class="Thequestion">${element[key]}</div>
                       </div>
                       <div class="col-lg-4 col-3">
                         <div class="question-imag" >
@@ -116,32 +110,75 @@ async function getExamId() {
                     </div>
                     <div class="row mt-4 pb-4">
                       <div class="col-lg-8 col-12">
-                    ` 
 
-                    for (const key2 in zaOptions) {
-                      if (Object.hasOwnProperty.call(zaOptions, key2)) {
-                        const element2 = zaOptions[key2];
-                        
-                        let options = Object.values(element2)[0].actual
-                        options.map((opti, iii) => {
-                          getNestedElement+=`
-                            <p class="opt">
-                                <span class="opt-let">${iii + 1}</span>
-                                <span>${opti}.</span>
-                              </p>
-                          `
-                        })
-                      }
-                    }
-                    
-                    
-                    getNestedElement+=`
-                    </div>
-                  </div>
-              </div>
-              </div>
-            </div>
-              `;
+                      <p class="opt">
+                      `
+                      // console.log(questionsNumber[0][key])
+                Object.values(questionsNumber[0][key]).actual.forEach((acc, ii) => {
+                  getNestedElement += `
+                        <span class="opt-let">${ii + 1}</span>
+                          <span>${acc}</span>
+                        `
+                })
+                getNestedElement += `     
+                           </p >
+                           </div >
+                           </div >
+                       </div >
+                       </div >
+                     </div >
+
+                  `
+              }
+
+              theOption.forEach((opt, index) => {
+                //   getNestedElement += `
+                // <div class="accordion-item">
+                //     <a href="#" class="heading">
+                //         <div class="icon"></div>
+                //         <div class="title">${opt}</div>
+                //     </a>
+
+                //     <div class="content">
+                //       <div class="container">
+                //       <div class="row mb-3">
+                //         <div class="col-lg-8 col-9">
+                //           <div class="Thequestion">${theQuestion[index]}</div>
+                //         </div>
+                //         <div class="col-lg-4 col-3">
+                //           <div class="question-imag" >
+                //             <img src="img/courseimg/2d.gif" width="100%" alt="" style="border-radius: 10px;" class="imag">
+                //           </div>
+                //         </div>
+                //       </div>
+                //       <div class="row mt-4 pb-4">
+                //         <div class="col-lg-8 col-12">
+                //       ` 
+
+                // for (const key2 in zaOptions) {
+                //   if (Object.hasOwnProperty.call(zaOptions, key2)) {
+                //     const element2 = zaOptions[key2];
+
+                //     let options = Object.values(element2)[0].actual
+                //     options.map((opti, iii) => {
+                //       getNestedElement+=`
+                //         <p class="opt">
+                //             <span class="opt-let">${iii + 1}</span>
+                //             <span>${opti}.</span>
+                //           </p>
+                //       `
+                //     })
+                //   }
+                // }
+
+
+                //     getNestedElement += `
+                //         </div>
+                //       </div>
+                //   </div>
+                //   </div>
+                // </div>
+                //   `;
               });
 
               $("#theAcord").html(getNestedElement);
