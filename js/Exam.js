@@ -71,7 +71,7 @@ async function getExamId() {
                 }
 
                 let questionsNumber = await response.json();
-                console.log(questionsNumber[0]['a']);
+                console.log(questionsNumber[1]);
                 removeLoader();
 
                 // console.log(questionsNumber);
@@ -80,14 +80,18 @@ async function getExamId() {
                     if (keyQuestion == 1) {
                         if (Object.hasOwnProperty.call(questionsNumber, keyQuestion)) {
                             const element = questionsNumber[keyQuestion];
-                            console.log(element);
+                            // console.log(element);
 
-                            let theOption = Object.keys(element);
-                            let theQuestion = Object.values(element);
-                            console.log(theOption, theQuestion);
-
-                            for (const key in element) {
-                                getNestedElement += `
+                            const ordered = Object.keys(element).sort().reduce(
+                                (obj, key) => {
+                                    obj[key] = element[key];
+                                    return obj;
+                                }, {}
+                            );
+                            let getNestId = 0
+                            for (const key in ordered) {
+                                let getNestId1 = getNestId++
+                                    getNestedElement += `
                 <div class="accordion-item">
                   <a href="#" class="heading">
                       <div class="icon"></div>
@@ -98,7 +102,7 @@ async function getExamId() {
                     <div class="container">
                     <div class="row mb-3">
                       <div class="col-lg-8 col-9">
-                        <div class="Thequestion">${element[key]}</div>
+                        <div class="Thequestion">${ordered[key]}</div>
                       </div>
                       <div class="col-lg-4 col-3">
                         <div class="question-imag" >
@@ -119,20 +123,17 @@ async function getExamId() {
 
                                         element.actual.forEach((acc, ii) => {
                                             getNestedElement += `
-                                            <p class="opt">
+                                            <span id="${getNestId1}_${ii + 1}">
+                                            <p class="opt iselect">
                                                   <span class="opt-let">${ii + 1}</span>
                                                     <span>${acc}</span>
                                                     </p >
+                                                    </span>
                                                   `
                                         })
                                     }
                                 }
-                                // Object.values(questionsNumber[0][key]).actual.forEach((acc, ii) => {
-                                //   getNestedElement += `
-                                //         <span class="opt-let">${ii + 1}</span>
-                                //           <span>${acc}</span>
-                                //         `
-                                // })
+
                                 getNestedElement += `     
                            
                            </div >
@@ -144,122 +145,11 @@ async function getExamId() {
                   `
                             }
 
-                            theOption.forEach((opt, index) => {
-                                //   getNestedElement += `
-                                // <div class="accordion-item">
-                                //     <a href="#" class="heading">
-                                //         <div class="icon"></div>
-                                //         <div class="title">${opt}</div>
-                                //     </a>
 
-                                //     <div class="content">
-                                //       <div class="container">
-                                //       <div class="row mb-3">
-                                //         <div class="col-lg-8 col-9">
-                                //           <div class="Thequestion">${theQuestion[index]}</div>
-                                //         </div>
-                                //         <div class="col-lg-4 col-3">
-                                //           <div class="question-imag" >
-                                //             <img src="img/courseimg/2d.gif" width="100%" alt="" style="border-radius: 10px;" class="imag">
-                                //           </div>
-                                //         </div>
-                                //       </div>
-                                //       <div class="row mt-4 pb-4">
-                                //         <div class="col-lg-8 col-12">
-                                //       ` 
-
-                                // for (const key2 in zaOptions) {
-                                //   if (Object.hasOwnProperty.call(zaOptions, key2)) {
-                                //     const element2 = zaOptions[key2];
-
-                                //     let options = Object.values(element2)[0].actual
-                                //     options.map((opti, iii) => {
-                                //       getNestedElement+=`
-                                //         <p class="opt">
-                                //             <span class="opt-let">${iii + 1}</span>
-                                //             <span>${opti}.</span>
-                                //           </p>
-                                //       `
-                                //     })
-                                //   }
-                                // }
-
-
-                                //     getNestedElement += `
-                                //         </div>
-                                //       </div>
-                                //   </div>
-                                //   </div>
-                                // </div>
-                                //   `;
-                            });
 
                             $("#theAcord").html(getNestedElement);
                             accordion()
-                                // for (const keyQuestion1 in element) {
-                                //   if (Object.hasOwnProperty.call(element, keyQuestion1)) {
-                                //     const element2 = element[keyQuestion1];
-
-                            //     document.querySelector(
-                            //       `.accordion[data-ul='${pressQ[i].dataset.quescount}']`
-                            //     ).innerHTML += `
-                            //     <div class="accordion-item" liList" data-getQuestionFromArray="${keyQuestion1}">${keyQuestion1}</li>
-                            //     `;
-                            //     document
-                            //       .querySelectorAll(".accordion-item.liList")
-                            //       .forEach((lili) => {
-
-                            //         lili.addEventListener("click", () => {
-                            //           let thePapa = questionsNumber[0][lili.textContent];
-                            //           // let Question = (Object.values(workings))
-                            //           let theAnswersArray =
-                            //             Object.values(thePapa)[0].actual;
-                            //           // console.log(theAnswersArray)
-                            //           // function shuffle(theAnswersArray) {
-                            //           //   let currentIndex = theAnswersArray.length,
-                            //           //     randomIndex;
-
-                            //           //   // While there remain elements to shuffle...
-                            //           //   while (currentIndex != 0) {
-                            //           //     // Pick a remaining element...
-                            //           //     randomIndex = Math.floor(
-                            //           //       Math.random() * currentIndex
-                            //           //     );
-                            //           //     currentIndex--;
-
-                            //           //     [
-                            //           //       theAnswersArray[currentIndex],
-                            //           //       theAnswersArray[randomIndex],
-                            //           //     ] = [
-                            //           //       theAnswersArray[randomIndex],
-                            //           //       theAnswersArray[currentIndex],
-                            //           //     ];
-                            //           //   }
-
-                            //           //   return theAnswersArray;
-                            //           // }
-                            //           // shuffle(theAnswersArray);
-
-                            //           // let asideoCount = document.querySelector(".options");
-                            //           // let down = document.querySelector(".canval");
-                            //           // asideoCount.innerHTML = "";
-                            //           // down.innerHTML = "";
-                            //           // for (let i = 0; i < theAnswersArray.length; i++) {
-                            //           //   asideoCount.innerHTML += `
-                            //           //   <div class="card mb-3 latex" data-target="T" data-cardid="${i}" draggable="true">
-                            //           //     <div class="card-body">
-                            //           //     ${theAnswersArray[i]}
-                            //           //     </div>
-                            //           //   </div> `;
-
-                            //           // }
-                            //           let theQuestion = element[lili.textContent];
-                            //           qustionnn.innerHTML = theQuestion;
-                            //         });
-                            //       });
-
-                            //   }
-                            // }
+                            switchOption()
                         }
                     }
                 }
@@ -292,4 +182,20 @@ function accordion() {
         $content.slideToggle(100);
         $(".accordion-item .content").not($content).slideUp("fast");
     });
+}
+
+function switchOption() {
+    let opt = document.querySelectorAll(".opt")
+    opt.forEach((mm) => {
+        mm.addEventListener("click", function() {
+            let presentClicked = mm.parentElement.id
+            mm.classList.remove('opt')
+            mm.classList.add('selecte')
+            if (mm.classList.contains('selecte')) {
+                alert('clicked')
+                presentClicked
+            }
+
+        })
+    })
 }
