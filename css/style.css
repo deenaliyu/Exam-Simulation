@@ -63,6 +63,7 @@ body {
   color: #fff;
   padding: 17px;
   border-radius: 10px 0px 0px 10px;
+  transition:  250ms ease-in-out;
   /*margin-top: 5px;*/
 }
 .opt.active {
@@ -87,7 +88,7 @@ body {
   background: #2bb4fa;
   padding: 17px;
   color: #fff;
-  transition:  250ms ease-in-out;
+  
   /*margin-top: 5px;*/
 }
 .bs-example{
@@ -110,7 +111,7 @@ body {
 }
 
 .contents{
-  position: fixed;
+  position: relative;
   top: 70px;
   font-family: Muli-light;
 }
@@ -152,6 +153,11 @@ body {
 .timer {
   font-family: muli;
   font-size: 20px;
+}
+.Thequestion{
+  font-family: Muli-light;
+  font-weight: 700;
+  font-size: large;
 }
 
 .status {
