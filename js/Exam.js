@@ -144,15 +144,13 @@ async function getExamId() {
 
                   `
                             }
-
-
-
-                            $("#theAcord").html(getNestedElement);
-                            accordion()
-                            switchOption()
                         }
                     }
                 }
+
+                $("#theAcord").html(getNestedElement);
+                accordion()
+                callOpt()
             }
 
             getExamNumber();
@@ -160,6 +158,18 @@ async function getExamId() {
     }
 }
 getExamId();
+
+function callOpt() {
+    let opt = document.querySelectorAll(".iselect")
+    opt.forEach((mm) => {
+        mm.addEventListener("click", function() {
+            console.log('fdghjh')
+            addMorove(mm)
+
+        })
+    })
+}
+
 
 function accordion() {
     $(".accordion-item .heading").on("click", function(e) {
@@ -205,40 +215,32 @@ function swap(json) {
 
 }
 
+let grabOption = {}
 
+function addMorove(mm) {
+    let presentClicked2 = mm.parentElement.id
+    let presentClicked = mm.parentElement
+    mm.classList.remove('opt')
+    mm.classList.add('selecte')
+    if (mm.classList.contains('selecte')) {
+        // alert('clicked')
 
-function switchOption() {
-    let opt = document.querySelectorAll(".opt")
-    let grabOption = {}
-    opt.forEach((mm) => {
-        mm.addEventListener("click", function() {
-            let presentClicked2 = mm.parentElement.id
-            let presentClicked = mm.parentElement
-            mm.classList.remove('opt')
-            mm.classList.add('selecte')
-            if (mm.classList.contains('selecte')) {
-                // alert('clicked')
-
-                if (Object.keys(grabOption).length <= 1) {
-                    grabOption[presentClicked2] = presentClicked.innerHTML
-                    if (Object.keys(grabOption).length == 2) {
-                        let ll = swap(grabOption)
-                            // console.log(swap(grabOption))
-                        for (let x in ll) {
-                            document.getElementById(x).innerHTML = ""
-                        }
-                        for (let o in ll) {
-                            document.getElementById(o).innerHTML = ll[o]
-                        }
-
-                    }
-                } else {
-                    // console.log(grabOption)
-
+        if (Object.keys(grabOption).length <= 1) {
+            grabOption[presentClicked2] = presentClicked.innerHTML
+            if (Object.keys(grabOption).length == 2) {
+                let ll = swap(grabOption)
+                    // console.log(swap(grabOption))
+                    // for (let x in ll) {
+                    //     document.getElementById(x).innerHTML = ""
+                    // }
+                for (let o in ll) {
+                    document.getElementById(o).innerHTML = ll[o]
+                        // document.getElementById(o).innerHTML = ll[o].replace('selecte', 'opt')
 
                 }
+                grabOption = {}
             }
+        }
+    }
 
-        })
-    })
 }
