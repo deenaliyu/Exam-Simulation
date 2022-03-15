@@ -71,7 +71,7 @@ async function getExamId() {
                 }
 
                 let questionsNumber = await response.json();
-                console.log(questionsNumber[1]);
+                // console.log(questionsNumber[1]);
                 removeLoader();
 
                 // console.log(questionsNumber);
@@ -115,11 +115,11 @@ async function getExamId() {
 
                       
                       `
-                                console.log(questionsNumber[0][key])
+                                    // console.log(questionsNumber[0][key])
                                 for (const key2 in questionsNumber[0][key]) {
                                     if (Object.hasOwnProperty.call(questionsNumber[0][key], key2)) {
                                         const element = questionsNumber[0][key][key2];
-                                        console.log(element.actual)
+                                        // console.log(element.actual)
 
                                         element.actual.forEach((acc, ii) => {
                                             getNestedElement += `
@@ -184,16 +184,59 @@ function accordion() {
     });
 }
 
+function swap(json) {
+
+    let ret = {};
+    let inn = ""
+    let innn = ""
+    let nn = 0
+    for (let key in json) {
+        let ni = nn++
+            if (ni == 0) {
+                inn = key
+            }
+        if (ni == 1) {
+            innn = key
+        }
+    }
+    ret[inn] = json[innn]
+    ret[innn] = json[inn]
+    return ret
+
+}
+
+
+
 function switchOption() {
     let opt = document.querySelectorAll(".opt")
+    let grabOption = {}
     opt.forEach((mm) => {
         mm.addEventListener("click", function() {
-            let presentClicked = mm.parentElement.id
+            let presentClicked2 = mm.parentElement.id
+            let presentClicked = mm.parentElement
             mm.classList.remove('opt')
             mm.classList.add('selecte')
             if (mm.classList.contains('selecte')) {
-                alert('clicked')
-                presentClicked
+                // alert('clicked')
+
+                if (Object.keys(grabOption).length <= 1) {
+                    grabOption[presentClicked2] = presentClicked.innerHTML
+                    if (Object.keys(grabOption).length == 2) {
+                        let ll = swap(grabOption)
+                            // console.log(swap(grabOption))
+                        for (let x in ll) {
+                            document.getElementById(x).innerHTML = ""
+                        }
+                        for (let o in ll) {
+                            document.getElementById(o).innerHTML = ll[o]
+                        }
+
+                    }
+                } else {
+                    // console.log(grabOption)
+
+
+                }
             }
 
         })
