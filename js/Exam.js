@@ -3,6 +3,8 @@ let prev = document.querySelector(".prev");
 let tabs = document.querySelectorAll(".nav-link");
 let pressQ = document.getElementsByClassName("number");
 
+let grabOption = {}
+
 function removeLoader() {
     $("#loading").remove();
     $("#load").remove();
@@ -150,7 +152,13 @@ async function getExamId() {
 
                 $("#theAcord").html(getNestedElement);
                 accordion()
-                callOpt()
+                let opt = document.querySelectorAll('.iselect')
+                opt.forEach((mm) => {
+                    mm.addEventListener('click', () => {
+                        addMorove(mm)
+                    })
+                })
+
             }
 
             getExamNumber();
@@ -158,18 +166,6 @@ async function getExamId() {
     }
 }
 getExamId();
-
-function callOpt() {
-    let opt = document.querySelectorAll(".iselect")
-    opt.forEach((mm) => {
-        mm.addEventListener("click", function() {
-            console.log('fdghjh')
-            addMorove(mm)
-
-        })
-    })
-}
-
 
 function accordion() {
     $(".accordion-item .heading").on("click", function(e) {
@@ -215,7 +211,7 @@ function swap(json) {
 
 }
 
-let grabOption = {}
+
 
 function addMorove(mm) {
     let presentClicked2 = mm.parentElement.id
@@ -244,3 +240,33 @@ function addMorove(mm) {
     }
 
 }
+
+// $(".iselect").each(function(index) {
+//     $(this).on("click", function() {
+//         console.log($(this))
+//         let presentClicked2 = $(this).parent().attr('id')
+//         let presentClicked = $(this).parent()
+//         $(this).removeClass('opt')
+//         $(this).addClass('selecte')
+//         if ($(this).hasClass('selecte')) {
+//             // alert('clicked')
+
+//             if (Object.keys(grabOption).length <= 1) {
+//                 grabOption[presentClicked2] = presentClicked.html()
+//                 if (Object.keys(grabOption).length == 2) {
+//                     let ll = swap(grabOption)
+//                         // console.log(swap(grabOption))
+//                         // for (let x in ll) {
+//                         //     document.getElementById(x).innerHTML = ""
+//                         // }
+//                     for (let o in ll) {
+//                         document.getElementById(o).innerHTML = ll[o]
+//                             // document.getElementById(o).innerHTML = ll[o].replace('selecte', 'opt')
+
+//                     }
+//                     grabOption = {}
+//                 }
+//             }
+//         }
+//     });
+// });
