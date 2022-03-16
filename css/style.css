@@ -55,6 +55,7 @@ body {
     display: flex;
     align-items: center;
     border-radius: 10px;
+    transition: 50ms ease-in-out;
 }
 
 .opt .opt-let {
@@ -62,9 +63,10 @@ body {
     margin-left: -15px;
     background: #565496;
     color: #fff;
-    padding: 17px;
+    padding: 25px 10px;
+    height: auto;
     border-radius: 10px 0px 0px 10px;
-    transition: 250ms ease-in-out;
+    transition: 50ms ease-in-out;
     /*margin-top: 5px;*/
 }
 
@@ -73,9 +75,9 @@ body {
     margin-left: -15px;
     background: #fa5b2b;
     color: #fff;
-    padding: 17px;
+    padding: 25px 10px;
     border-radius: 10px 0px 0px 10px;
-    transition: 250ms ease-in-out;
+    transition: 50ms ease-in-out;
     /*margin-top: 5px;*/
 }
 
@@ -94,7 +96,7 @@ body {
 }
 
 .imag:hover {
-    transform: scale(2);
+    transform: scale(1.5);
 }
 
 .imag {
@@ -105,9 +107,17 @@ body {
     margin-right: 30px;
     margin-left: -15px;
     background: #2bb4fa;
-    padding: 17px;
+    padding: 25px 10px;
     color: #fff;
+    transition: 50ms ease-in-out;
     /*margin-top: 5px;*/
+}
+
+.btn-primary {
+    background-color: #2bb4fa !important;
+    /* box-shadow: 0 0 15px rgb(0 0 0 / 10%); */
+    border-radius: 7px;
+    border: 1px solid #2bb4fa;
 }
 
 .bs-example {
@@ -135,6 +145,8 @@ body {
     position: relative;
     top: 70px;
     font-family: Muli-light;
+    overflow: hidden;
+    margin-bottom: 10rem;
 }
 
 .keys .btn {
@@ -142,11 +154,12 @@ body {
     font-weight: b;
 }
 
-.keys .btn-danger {
-    border-radius: 50%;
+.btn-nur {
+    background-color: #fff !important;
+    /* box-shadow: 0 0 15px rgb(0 0 0 / 10%); */
+    border: 1px solid #2bb4fa !important;
     font-family: "Roboto", sans-serif;
-    font-size: 20px;
-    color: #fff;
+    color: #2bb4fa;
     border: none;
     transition: all 0.3s ease 0s;
     cursor: pointer;
@@ -283,7 +296,7 @@ body {
 
 .accordion {
     width: 100%;
-    max-width: 75rem;
+    max-width: 83rem;
     margin: 0 auto;
     padding: 2rem;
 }
@@ -383,4 +396,13 @@ body {
     .accordion-item .content {
         line-height: 1.75;
     }
+}
+
+.site-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background: #fff;
+    box-shadow: 0 0 15px rgb(0 0 0 / 10%);
 }

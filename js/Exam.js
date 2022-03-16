@@ -1,6 +1,5 @@
-let next = document.querySelector(".next");
+let next = document.querySelectorAll(".next");
 let prev = document.querySelector(".prev");
-let tabs = document.querySelectorAll(".nav-link");
 let pressQ = document.getElementsByClassName("number");
 
 let grabOption = {}
@@ -37,6 +36,15 @@ async function getExamId() {
             </li> 
         `;
     }
+    let tabs = document.querySelectorAll(".nav-link");
+
+    for (let i = 0; i < tabs.length; i++) {
+        tabs[i].addEventListener('click', function() {
+            for (let j = 0; j < tabs.length; j++)
+                tabs[j].classList.remove('active');
+            this.classList.add('active');
+        });
+    }
     prev.addEventListener("click", (e) => {
         for (let i = 0; i < tabs.length; i++) {
             if (tabs[i].classList.contains("active")) {
@@ -45,14 +53,17 @@ async function getExamId() {
             }
         }
     });
-    next.addEventListener("click", (e) => {
-        for (let i = 0; i < tabs.length; i++) {
-            if (tabs[i].classList.contains("active")) {
-                tabs[i + 1].click();
-                break;
+    next.forEach((ee) => {
+        ee.addEventListener("click", (e) => {
+            for (let i = 0; i < tabs.length; i++) {
+                if (tabs[i].classList.contains("active")) {
+                    tabs[i + 1].click();
+                    break;
+                }
             }
-        }
-    });
+        });
+    })
+
     for (let i = 0; i < pressQ.length; i++) {
         pressQ[i].addEventListener("click", function() {
             $("body").append(`<div id="loading" class="loading">
@@ -76,6 +87,20 @@ async function getExamId() {
                 let questionsNumber = await response.json();
                 // console.log(questionsNumber[1]);
                 removeLoader();
+
+                document.querySelector('.stopWatch').innerHTML += `
+                <div class="timer">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <span class="timerIcon">
+                                <span class="iconify" data-icon="ant-design:field-time-outlined"></span>
+                            </span>
+                            <span class="theCount">
+                                <h4 class="d-flex justify-content-start" ><span class="timoe" id="hours"></span><span>:</span> <span class="timoe" id="minutes"></span> <span>:</span> <span class=" timoe" id="seconds"></span></h4>
+                            </span>
+                        </div>
+                    </div>
+                `
+
 
                 // console.log(questionsNumber);
                 let getNestedElement = "";
@@ -116,9 +141,10 @@ async function getExamId() {
                     <div class="row mt-4 pb-4">
                       <div class="col-lg-8 col-12">
 
-                      
                       `
-                                    // console.log(questionsNumber[0][key])
+
+                                timerAll();
+                                // console.log(questionsNumber[0][key])
                                 for (const key2 in questionsNumber[0][key]) {
                                     if (Object.hasOwnProperty.call(questionsNumber[0][key], key2)) {
                                         const element = questionsNumber[0][key][key2];
@@ -128,7 +154,7 @@ async function getExamId() {
                                             getNestedElement += `
                                             <span id="${getNestId1}_${ii + 1}">
                                             <p class="opt iselect">
-                                                  <span class="opt-let">${ii + 1}</span>
+                                                  <span class="opt-let"></span>
                                                     <span>${acc}</span>
                                                     </p >
                                                     </span>
@@ -161,6 +187,9 @@ async function getExamId() {
             getExamNumber();
         });
     }
+
+    document.querySelectorAll(".nav-link")[0].click()
+
 }
 getExamId();
 
@@ -212,7 +241,7 @@ function selection(params) {
     opt = document.querySelectorAll('.iselect')
     opt.forEach((mm) => {
         mm.addEventListener('click', () => {
-            console.log('hahahah')
+            // console.log('hahahah')
             addMorove(mm)
         })
     })
@@ -249,32 +278,41 @@ function addMorove(mm) {
 
 }
 
-// $(".iselect").each(function(index) {
-//     $(this).on("click", function() {
-//         console.log($(this))
-//         let presentClicked2 = $(this).parent().attr('id')
-//         let presentClicked = $(this).parent()
-//         $(this).removeClass('opt')
-//         $(this).addClass('selecte')
-//         if ($(this).hasClass('selecte')) {
-//             // alert('clicked')
+function timerAll(params) {
+    let timer;
 
-//             if (Object.keys(grabOption).length <= 1) {
-//                 grabOption[presentClicked2] = presentClicked.html()
-//                 if (Object.keys(grabOption).length == 2) {
-//                     let ll = swap(grabOption)
-//                         // console.log(swap(grabOption))
-//                         // for (let x in ll) {
-//                         //     document.getElementById(x).innerHTML = ""
-//                         // }
-//                     for (let o in ll) {
-//                         document.getElementById(o).innerHTML = ll[o]
-//                             // document.getElementById(o).innerHTML = ll[o].replace('selecte', 'opt')
+    let compareDate = new Date();
+    compareDate.setDate(compareDate.getDate() + 7);
 
-//                     }
-//                     grabOption = {}
-//                 }
-//             }
-//         }
-//     });
-// });
+    timer = setInterval(function() {
+        timeBetweenDates(compareDate);
+    }, 1000);
+
+    function timeBetweenDates(toDate) {
+        let dateEntered = toDate;
+        let now = new Date();
+        let difference = dateEntered.getTime() - now.getTime();
+
+        if (difference <= 0) {
+
+            // Timer done
+            clearInterval(timer);
+
+        } else {
+
+            let seconds = Math.floor(difference / 1000);
+            let minutes = Math.floor(seconds / 60);
+            let hours = Math.floor(minutes / 60);
+            let days = Math.floor(hours / 24);
+
+            hours %= 2;
+            minutes %= 60;
+            seconds %= 60;
+
+            $("#days").text(days);
+            $("#hours").text(hours);
+            $("#minutes").text(minutes);
+            $("#seconds").text(seconds);
+        }
+    }
+}
