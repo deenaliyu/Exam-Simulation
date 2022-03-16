@@ -49,6 +49,7 @@ async function getExamId() {
         for (let i = 0; i < tabs.length; i++) {
             if (tabs[i].classList.contains("active")) {
                 tabs[i - 1].click();
+                tabs[i - 1].scrollIntoView();
                 break;
             }
         }
@@ -58,11 +59,25 @@ async function getExamId() {
             for (let i = 0; i < tabs.length; i++) {
                 if (tabs[i].classList.contains("active")) {
                     tabs[i + 1].click();
+                    tabs[i + 1].scrollIntoView();
                     break;
                 }
             }
         });
     })
+
+    document.querySelector('.stopWatch').innerHTML += `
+    <div class="timer">
+            <div class="d-flex justify-content-center align-items-center">
+                <span class="timerIcon">
+                    <span class="iconify" data-icon="ant-design:field-time-outlined"></span>
+                </span>
+                <span class="theCount">
+                    <h4 class="d-flex justify-content-center" ><span class="timoe" id="hours"></span><span>:</span> <span class="timoe" id="minutes"></span> <span>:</span> <span class=" timoe" id="seconds"></span></h4>
+                </span>
+            </div>
+        </div>
+    `
 
     for (let i = 0; i < pressQ.length; i++) {
         pressQ[i].addEventListener("click", function() {
@@ -88,18 +103,6 @@ async function getExamId() {
                 // console.log(questionsNumber[1]);
                 removeLoader();
 
-                document.querySelector('.stopWatch').innerHTML += `
-                <div class="timer">
-                        <div class="d-flex justify-content-center align-items-center">
-                            <span class="timerIcon">
-                                <span class="iconify" data-icon="ant-design:field-time-outlined"></span>
-                            </span>
-                            <span class="theCount">
-                                <h4 class="d-flex justify-content-start" ><span class="timoe" id="hours"></span><span>:</span> <span class="timoe" id="minutes"></span> <span>:</span> <span class=" timoe" id="seconds"></span></h4>
-                            </span>
-                        </div>
-                    </div>
-                `
 
 
                 // console.log(questionsNumber);
@@ -116,6 +119,9 @@ async function getExamId() {
                                     return obj;
                                 }, {}
                             );
+                            // console.log(ordered)
+
+
                             let getNestId = 0
                             for (const key in ordered) {
                                 let getNestId1 = getNestId++
@@ -129,10 +135,10 @@ async function getExamId() {
                   <div class="content">
                     <div class="container">
                     <div class="row mb-3">
-                      <div class="col-lg-8 col-9">
+                      <div class="col-lg-8 col-12">
                         <div class="Thequestion">${ordered[key]}</div>
                       </div>
-                      <div class="col-lg-4 col-3">
+                      <div class="col-lg-4 col-12">
                         <div class="question-imag" >
                           <img src="img/courseimg/2d.gif" width="100%" alt="" style="border-radius: 10px;" class="imag">
                         </div>
@@ -149,7 +155,28 @@ async function getExamId() {
                                     if (Object.hasOwnProperty.call(questionsNumber[0][key], key2)) {
                                         const element = questionsNumber[0][key][key2];
                                         // console.log(element.actual)
+                                        let alll = element.actual
 
+                                        function shuffle(alll) {
+                                            let currentIndex = alll.length,
+                                                randomIndex;
+
+                                            // While there remain elements to shuffle...
+                                            while (currentIndex != 0) {
+
+                                                // Pick a remaining element...
+                                                randomIndex = Math.floor(Math.random() * currentIndex);
+                                                currentIndex--;
+
+                                                // And swap it with the current element.
+                                                [alll[currentIndex], alll[randomIndex]] = [
+                                                    alll[randomIndex], alll[currentIndex]
+                                                ];
+                                            }
+
+                                            return alll;
+                                        }
+                                        shuffle(alll);
                                         element.actual.forEach((acc, ii) => {
                                             getNestedElement += `
                                             <span id="${getNestId1}_${ii + 1}">

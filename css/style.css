@@ -43,9 +43,10 @@ body {
 
 .loading-image {
     position: absolute;
-    top: 100px;
-    left: 300px;
+    top: 18%;
+    left: 25%;
     z-index: 100;
+    width: 40%;
 }
 
 .opt {
@@ -207,6 +208,10 @@ body {
     background-color: #E5E5E5;
     border-radius: 4px;
     position: relative;
+}
+
+.bts {
+    margin-left: -80px;
 }
 
 .nav-pills .nav-link.active,
@@ -405,4 +410,30 @@ body {
     height: 60px;
     background: #fff;
     box-shadow: 0 0 15px rgb(0 0 0 / 10%);
+}
+
+@media (max-width:360px) {
+    .allquestion {
+        width: 180px;
+        overflow: auto;
+    }
+    .nav {
+        flex-wrap: nowrap !important;
+    }
+    .bts {
+        margin-left: 10px;
+    }
+    .timerIcon {
+        display: none;
+    }
+    .timer {
+        margin-top: 10px;
+    }
+    .loading-image {
+        position: absolute;
+        top: 18%;
+        left: 25%;
+        z-index: 100;
+        width: 40%;
+    }
 }
