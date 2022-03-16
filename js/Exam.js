@@ -4,6 +4,7 @@ let tabs = document.querySelectorAll(".nav-link");
 let pressQ = document.getElementsByClassName("number");
 
 let grabOption = {}
+let opt
 
 function removeLoader() {
     $("#loading").remove();
@@ -152,12 +153,8 @@ async function getExamId() {
 
                 $("#theAcord").html(getNestedElement);
                 accordion()
-                let opt = document.querySelectorAll('.iselect')
-                opt.forEach((mm) => {
-                    mm.addEventListener('click', () => {
-                        addMorove(mm)
-                    })
-                })
+                selection()
+
 
             }
 
@@ -211,6 +208,15 @@ function swap(json) {
 
 }
 
+function selection(params) {
+    opt = document.querySelectorAll('.iselect')
+    opt.forEach((mm) => {
+        mm.addEventListener('click', () => {
+            console.log('hahahah')
+            addMorove(mm)
+        })
+    })
+}
 
 
 function addMorove(mm) {
@@ -230,11 +236,13 @@ function addMorove(mm) {
                     //     document.getElementById(x).innerHTML = ""
                     // }
                 for (let o in ll) {
-                    document.getElementById(o).innerHTML = ll[o]
-                        // document.getElementById(o).innerHTML = ll[o].replace('selecte', 'opt')
+                    // document.getElementById(o).innerHTML = ll[o]
+                    document.getElementById(o).innerHTML = ll[o].replace('selecte', 'opt')
 
                 }
                 grabOption = {}
+                selection()
+                opt = document.querySelectorAll('.iselect')
             }
         }
     }
