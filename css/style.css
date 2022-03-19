@@ -211,7 +211,7 @@ body {
 }
 
 .bts {
-    margin-left: -80px;
+    margin-left: -60px;
 }
 
 .nav-pills .nav-link.active,
@@ -412,7 +412,7 @@ body {
     box-shadow: 0 0 15px rgb(0 0 0 / 10%);
 }
 
-@media (max-width:360px) {
+@media (max-width:375px) {
     .allquestion {
         width: 180px;
         overflow: auto;
