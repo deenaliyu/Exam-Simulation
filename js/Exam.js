@@ -1,6 +1,7 @@
 let next = document.querySelectorAll(".next");
 let prev = document.querySelector(".prev");
 let pressQ = document.getElementsByClassName("number");
+let correctAnswerCheck = []
 
 let grabOption = {}
 let opt
@@ -156,6 +157,10 @@ async function getExamId() {
                                         const element = questionsNumber[0][key][key2];
                                         // console.log(element.actual)
                                         let alll = element.actual
+                                        for (let i = 0; i < alll.length; i++) {
+                                            correctAnswerCheck.push(alll[i])
+                                        }
+
 
                                         function shuffle(alll) {
                                             let currentIndex = alll.length,
@@ -186,9 +191,12 @@ async function getExamId() {
                                                     </p >
                                                     </span>
                                                   `
+                                            console.log(acc)
                                         })
                                     }
                                 }
+
+
 
                                 getNestedElement += `     
                            
@@ -204,6 +212,7 @@ async function getExamId() {
                     }
                 }
 
+                console.log(correctAnswerCheck)
                 $("#theAcord").html(getNestedElement);
                 accordion()
                 selection()
@@ -219,6 +228,7 @@ async function getExamId() {
 
 }
 getExamId();
+
 
 function accordion() {
     $(".accordion-item .heading").on("click", function(e) {
@@ -343,3 +353,8 @@ function timerAll(params) {
         }
     }
 }
+
+let submitBtn = document.querySelector('.submit');
+submitBtn.addEventListener("click", (e) => {
+    alert('clicked')
+})
