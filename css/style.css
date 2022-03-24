@@ -433,9 +433,9 @@ body {
   z-index: -1;
 }
 
-.accordion-item .content {
+/* .accordion-item .content {
   display: none;
-}
+} */
 
 .accordion-item .content p {
   margin-top: 0;

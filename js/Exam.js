@@ -2,6 +2,13 @@ let next = document.querySelectorAll(".next");
 let prev = document.querySelector(".prev");
 let pressQ = document.getElementsByClassName("number");
 
+let url = window.location.href
+
+let theContent = url.split("?")[1]
+let splitContent = theContent.split("-")
+let subject = splitContent[1]
+let examTypo = splitContent[0]
+
 let correctAnswerCheck = []
 
 let grabOption = {}
@@ -16,7 +23,7 @@ let counterr;
 
 async function getExamId() {
   const response = await fetch(
-    `https://steamledge.com/blueberry/php2/?getExamTheoryId&mode=math&content=waec`, {
+    `https://steamledge.com/blueberry/php2/?getExamTheoryId&mode=${subject}&content=${examTypo}`, {
     method: "GET",
   }
   );
@@ -150,16 +157,17 @@ async function getExamId() {
 
                 let getNestId = 0
                 for (const key in ordered) {
+                  incrr++
                   let getNestId1 = getNestId++
                   getNestedElement += `
                         
                 <div class="accordion-item">
-                  <a href="#" class="heading">
+                  <a href="#acc${incrr}" class="heading" data-bs-toggle="collapse">
                       <div class="icon"></div>
                       <div class="title">${key}</div>
                   </a>
           
-                  <div class="content">
+                  <div class="content collapse" id="acc${incrr}">
                     <div class="container">
                     <div class="row mb-3">
                       <div class="col-lg-8 col-12">
@@ -260,26 +268,32 @@ timerAll();
 
 function accordion() {
 
-  $(".accordion-item .heading").on("click", function (e) {
-    e.preventDefault();
+  // $(".accordion-item .heading").on("click", function (e) {
+  //   e.preventDefault();
 
-    // Add the correct active class
-    if ($(this).closest(".accordion-item").hasClass("active")) {
-      // Remove active classes
-      $(".accordion-item").removeClass("active");
-    } else {
-      // Remove active classes
-      $(".accordion-item").removeClass("active");
+  //   // Add the correct active class
+  //   let activeAcc = document.querySelector(".accordion-item.active")
 
-      // Add the active class
-      $(this).closest(".accordion-item").addClass("active");
-    }
+  //   if (activeAcc) {
+  //     activeAcc.classList.remove("active")
+  //   } 
+  //   $(this).parent().addClass('active')
+  //   // if ($(this).closest(".accordion-item").hasClass("active")) {
+  //   //   // Remove active classes
+  //   //   $(".accordion-item").removeClass("active");
+  //   // } else {
+  //   //   // Remove active classes
+  //   //   $(".accordion-item").removeClass("active");
 
-    // Show the content
-    var $content = $(this).next();
-    $content.slideToggle(100);
-    $(".accordion-item .content").not($content).slideUp("fast");
-  });
+  //   //   // Add the active class
+  //   //   $(this).closest(".accordion-item").addClass("active");
+  //   // }
+
+  //   // Show the content
+  //   var $content = $(this).next();
+  //   $content.slideToggle(100);
+  //   $(".accordion-item .content").not($content).slideUp("fast");
+  // });
 }
 
 function swap(json) {
@@ -394,27 +408,29 @@ submitBtn.addEventListener("click", (e) => {
     if (result.isConfirmed) {
       let optImgArray = []
       let correctCheckArray = []
-    
+
+      let totalQues = document.querySelectorAll('.allquestion .nav-link').length
+      let attempetemQues = document.querySelectorAll('.allquestion .nav-link.opened').length
       // converting HTMLELEMENT to string 
       var optImg = $(".iselect .img-fluid")
         .map(function () {
           optImgArray.push(this.outerHTML)
           return this.outerHTML;
         }).get().join("");
-    
+
       for (let i = 0; i < optImgArray.length; i++) {
         if (correctAnswerCheck[i] === optImgArray[i]) {
           correctCheckArray.push("1")
         }
       }
-    
-      console.log(correctCheckArray)
+
+      //   console.log(correctCheckArray)
       let total = optImgArray.length
       let correct = correctCheckArray.length
-    
+
       let totalPercentage = (correct / total) * 100
-      console.log(totalPercentage)
-    
+      //   console.log(totalPercentage)
+
       let scoreconto = `
       <div class="scoreCont d-flex">
       <div class=" d-flex justify-content-center align-items-center w-100" style="height: 100%">
@@ -432,8 +448,8 @@ submitBtn.addEventListener("click", (e) => {
       scoreconto += `
       <h1 class="font-Itim">Score</h1>
         <h2 class="text-primary font-Itim">${Math.round(totalPercentage)} %</h2>
-    
-        <a class="finish btn" href="dashboard.html" style="margin-top: 50px;">go to dashboard</a>
+        <p style="color: #000; font-weight: bold">You attempted ${attempetemQues} questions out of ${totalQues}</p>
+        <a class="finish btn" href="../dashboard.html" style="margin-top: 50px;">go to dashboard</a>
         </div>  
       </div>
       </div>
